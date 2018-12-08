@@ -1,0 +1,13 @@
+{
+  "name": "Image Inpainting",
+  "description": "Refined image inpainting with deformable layer",
+  "keywords": [
+    "flask",
+    "python",
+    "neural network",
+    "image inpainting"
+  ],
+  "repository": "",
+  "addons": [
+  ]
+}
