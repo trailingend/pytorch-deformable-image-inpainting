@@ -26,9 +26,9 @@ def generateMask(shape, img_w, img_h, x1, y1, x2, y2):
 
 
 # python predict.py model_cn_step400000 config.json input.jpg output.jpg
-def generateNewFace(filename, x1, y1, x2, y2):
+def generateNewFace(filename, type, x1, y1, x2, y2):
     output_filename = "dist/output.jpg"
-    model_body = os.path.expanduser("server/model_cn_step400000")
+    model_body = os.path.expanduser("server/model_cn_step40000")
     config = os.path.expanduser("server/config.json")
     input_img = os.path.expanduser(filename)
     output_img = os.path.expanduser("static/" + output_filename)
@@ -55,6 +55,8 @@ def generateNewFace(filename, x1, y1, x2, y2):
     # img = transforms.Randomrop((img_size, img_size))(img)
     x = transforms.ToTensor()(img)
     x = torch.unsqueeze(x, dim=0)
+    if 'png' in type:
+        x = x[:, 0:3, :, :]
 
     # create mask
     msk = generateMask(x.shape, img_w, img_h, int(x1), int(y1), int(x2), int(y2))

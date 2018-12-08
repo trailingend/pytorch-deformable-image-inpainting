@@ -32,7 +32,7 @@ def _generate():
         filename = input
 
     message = 'Image successfully updated'
-    newFaceSrcUrl = predict.generateNewFace(filename, x1, y1, x2, y2)
+    newFaceSrcUrl = predict.generateNewFace(filename, type, x1, y1, x2, y2)
     return jsonify(result=newFaceSrcUrl, msg=message)
 
 '''
@@ -46,9 +46,9 @@ def index():
     Method to save dataUrl to local image
 '''
 def saveImage(dataURLVar, type):
-    fname = 'server/from_upload' + type
-    fname2 = 'static/dist/from_upload' + type
-    result = 'dist/from_upload' + type
+    fname = 'server/from_upload.' + type
+    fname2 = 'static/dist/from_upload.' + type
+    result = 'dist/from_upload.' + type
     # imgData = base64.b64decode(dataURLVar)
     dataURL = unquote(dataURLVar)
     imgdata=base64.b64decode(dataURL)
