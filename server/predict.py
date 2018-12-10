@@ -88,7 +88,7 @@ def generateNewFace(filename, type, maskname):
     img = Image.open(input_img)
     img_w, img_h = img.size
     img = transforms.Resize(img_size)(img)
-    img = transforms.RandomCrop((img_size, img_size))(img)
+    img = transforms.CenterCrop(img_size)(img)
     x = transforms.ToTensor()(img)
     x = torch.unsqueeze(x, dim=0)
     if 'png' in type:
