@@ -50,11 +50,17 @@ button:hover, button:active {
     overflow: hidden;
 }
 .img-elem {
-    position: relative;
+    /* position: relative;
     display: block;
     width: 300px;
     height: auto;
-    margin: 0 auto;
+    margin: 0 auto; */
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: auto;
+    top: 50%;
+    transform: translateY(-50%);
 }
 .img-mask, .img-video, .img-stream {
     display: block;

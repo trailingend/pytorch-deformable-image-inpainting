@@ -21,18 +21,24 @@ def _generate():
     startUploading = request.args.get('startUploading', 0, type=bool)
     type = request.args.get('type')
     input = request.args.get('input')
+    mask = request.args.get('mask')
     x1 = request.args.get('mask1')
     y1 = request.args.get('mask2')
     x2 = request.args.get('mask3')
     y2 = request.args.get('mask4')
 
+    maskname = saveImage(mask, 'mask', 'png');
+
     if (type == 'jpg' or type == 'png'  ):
-        filename = saveImage(input, type);
+        filename = saveImage(input, 'from_upload', type);
     elif (type == 'url'):
         filename = input
 
+
+
     message = 'Image successfully updated'
-    newFaceSrcUrl = predict.generateNewFace(filename, type, x1, y1, x2, y2)
+    # newFaceSrcUrl = predict.generateNewFace(filename, type, x1, y1, x2, y2)
+    newFaceSrcUrl = predict.generateNewFace(filename, type, maskname)
     return jsonify(result=newFaceSrcUrl, msg=message)
 
 '''
@@ -45,10 +51,10 @@ def index():
 '''
     Method to save dataUrl to local image
 '''
-def saveImage(dataURLVar, type):
-    fname = 'server/from_upload.' + type
-    fname2 = 'static/dist/from_upload.' + type
-    result = 'dist/from_upload.' + type
+def saveImage(dataURLVar, name, type):
+    fname = 'server/' + name + '.' + type
+    fname2 = 'static/dist/' + name + '.' + type
+    result = 'dist/' + name + '.' + type
     # imgData = base64.b64decode(dataURLVar)
     dataURL = unquote(dataURLVar)
     imgdata=base64.b64decode(dataURL)

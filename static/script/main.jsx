@@ -24,6 +24,9 @@ export default class Main extends React.Component {
         this.capturePhoto = this.capturePhoto.bind(this);
         this.generatePhoto = this.generatePhoto.bind(this);
         this.cropARegion = this.cropARegion.bind(this);
+        this.initMask = this.initMask.bind(this);
+        this.endMask = this.endMask.bind(this);
+        this.cropMask = this.cropMask.bind(this);
     }
 
     /*
@@ -58,6 +61,8 @@ export default class Main extends React.Component {
                 imgSrc: dataURL
             });
             this.setDisplayMessage("Select a region on the sample’s face to regenerate");
+            console.log($('.img-elem').width() + " " + document.getElementsByClassName('img-elem')[0].height)
+            $('.img-elem').css('marginTop', - ($('.img-elem').height() - $('.img-elem').width()) / 2);
         }, false);
 
         if (file) {
@@ -117,18 +122,22 @@ export default class Main extends React.Component {
         var base64result;
         if (this.state.type == "jpg" || this.state.type == "png") {
             if (this.state.rectStatus == 2) {
-                $('.rect-mask').css( { 'opacity': 0 });
+                var mask = document.getElementById('img-mask');
                 base64result = this.state.imgSrc.split(',')[1];
                 this.setDisplayMessage("Communicating with server and generating new face");
                 $.getJSON($SCRIPT_ROOT + '/_generate', {
                     startUploading: true,
                     input: base64result, // this.state.imgSrc,
                     type: this.state.type,
-                    mask1: this.state.mouse_pos[0],
-                    mask2:this.state.mouse_pos[1],
-                    mask3: this.state.mouse_pos[2],
-                    mask4:this.state.mouse_pos[3],
+                    mask: mask.toDataURL('image/png').split(',')[1],
+                    // mask1: this.state.mouse_pos[0],
+                    // mask2:this.state.mouse_pos[1],
+                    // mask3: this.state.mouse_pos[2],
+                    // mask4:this.state.mouse_pos[3],
                 }, (data) => {
+                    $('.img-mask').css( { 'opacity': 0 });
+                    // $('.img-elem').css( { 'width': 'auto' });
+                    $('.img-group').css( { 'width': '600px' });
                     this.setDisplayMessage(data.msg);
                     this.setImageSource(data.result);
                     console.log("communication success")
@@ -194,6 +203,53 @@ export default class Main extends React.Component {
     }
 
     /*
+        Method to start mask painting
+    */
+    initMask(e) {
+        if (this.state.type != "dummy") {
+            if (this.state.rectStatus == 0 || this.state.rectStatus == 2) {
+                this.setState({rectStatus: 1});
+            }
+        }
+    }
+
+    /*
+        Method to end mask painting
+    */
+    endMask(e) {
+        if (this.state.rectStatus == 1) {
+            this.setState({rectStatus: 2});
+        }
+    }
+
+    /*
+        Method to paint mask
+    */
+    cropMask(e) {
+        var left_padding = $('.img-group').css("margin-left");
+        var left_padding = left_padding.substring(0, left_padding.length - 2);
+        var total_left = (e.pageX + window.pageXOffset);
+        var mouseX = total_left - left_padding;
+
+        var bodyRect = document.body.getBoundingClientRect()
+        var elemRect = document.getElementsByClassName("img-mask")[0].getBoundingClientRect();
+        var elem_top   = elemRect.top - bodyRect.top;
+        var total_top = e.pageY + window.pageYOffset;;
+        var mouseY = total_top - elem_top;
+        if (this.state.type != "dummy") {
+            if (this.state.rectStatus == 1){
+                const ctx = this.refs.mask.getContext('2d');
+                ctx.fillStyle = '#808080';
+                ctx.beginPath();
+                ctx.arc(mouseX, mouseY, 10, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        } else {
+            this.setDisplayMessage("You need to upload a photo to start");
+        }
+    }
+
+    /*
         Method to render dom
     */
     render () {
@@ -206,10 +262,7 @@ export default class Main extends React.Component {
                 <img src={this.state.imgSrc} className="img-elem"/>
                 <video id="img-video" className="img-video" autoPlay></video>
                 <canvas id="img-stream" className="img-stream" width="300" height="300"></canvas>
-                <div className="img-mask" onClick={this.cropARegion}>
-                    <div className="dot-mask"></div>
-                    <div className="rect-mask"></div>
-                </div>
+                <canvas id="img-mask" ref="mask" className="img-mask" width="300" height="300" onMouseDown={this.initMask} onMouseMove={this.cropMask} onMouseUp={this.endMask} ></canvas>
             </div>
             <div className="btn-groups">
                 <label htmlFor="action-upload" className="action-label">Upload a Photo</label>
