@@ -36,7 +36,7 @@
 ## How to test front-end framework
 - change directory into the static folder, run `npm install` and then `npm run watch` in Terminal
 
------------------------------
+<!-- ----------------------------- -->
 
 <!-- ## Heroku Information
 - how to create:
@@ -54,8 +54,6 @@
 <!-- - Online: locally the app is instantiated via terminal by calling the Flask app. On Heroku, the app is wrapped with the web service gunicorn to initiate the Flask server. -->
 
 -----------------------------
-## In main.jsx
-// <div className="img-mask" onClick={this.cropARegion}>
-//     <div className="dot-mask"></div>
-//     <div className="rect-mask"></div>
-// </div>
+## Acknowledgement
+- Original code of Generator and Discriminators: https://github.com/otenim/GLCIC-PyTorch
+- Original code of Deformable Convolutional layer: https://github.com/oeway/pytorch-deform-conv
