@@ -28,13 +28,13 @@
 - in the project root folder, run `python app.py` in Terminal
 - url: localhost:5000
 
-## To compile front-end
-- change directory into the static folder, run `npm run dev` in Terminal
+## How to test front-end framework
+- change directory into the static folder, run `npm install` and then `npm run dev` in Terminal
 - url: localhost:8080
 - remember to clear browser cache
 
-## How to test front-end framework
-- change directory into the static folder, run `npm install` and then `npm run watch` in Terminal
+## How to compile front-end
+- change directory into the static folder, run `npm run build` in Terminal
 
 <!-- ----------------------------- -->
 
