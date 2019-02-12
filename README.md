@@ -1,5 +1,5 @@
 # Image Inpainting Demo
-### Authors: Lynn Duan, Lei Pan, Jingwen Zhang, Jayleen Zhou
+### Created by Lynn Duan, Lei Pan, Jingwen Zhang, Jayleen Zhou
 
 -----------------------------
 
