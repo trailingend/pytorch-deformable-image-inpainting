@@ -1,5 +1,6 @@
 # Image Inpainting Demo
-### Created by Lynn Duan, Lei Pan, Jingwen Zhang, Jayleen Zhou
+Web Framework - Jayleen Zhou
+Inpainting Algorithm - Lynn Duan, Lei Pan, Jingwen Zhang
 
 -----------------------------
 
