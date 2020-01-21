@@ -1,6 +1,6 @@
 # Image Inpainting Demo
-Web Framework - Jayleen Zhou
-Inpainting Algorithm - Lynn Duan, Lei Pan, Jingwen Zhang
+### Web Framework - Jayleen Zhou
+### Inpainting Algorithm - Lynn Duan, Lei Pan, Jingwen Zhang
 
 -----------------------------
 
