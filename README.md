@@ -4,6 +4,7 @@
 -----------------------------
 
 ## sitemap inside the working folder
+```bash
 ├── README.md
 ├── app.py
 ├── server/
@@ -21,6 +22,7 @@
     ├── style/
         └── main.css
     └── index.html
+```
 
 -----------------------------
 
